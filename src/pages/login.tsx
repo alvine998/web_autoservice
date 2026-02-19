@@ -17,7 +17,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            router.push("/");
+            router.push("/dashboard");
         }
     }, [isAuthenticated, router]);
 
@@ -26,7 +26,7 @@ const LoginPage = () => {
         setIsLoading(true);
         try {
             await login(email);
-            router.push("/");
+            router.push("/dashboard");
         } catch (error) {
             console.error("Login failed", error);
         } finally {

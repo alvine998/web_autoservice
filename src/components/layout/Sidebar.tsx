@@ -29,7 +29,7 @@ const navGroups: { title: string; items: NavItem[] }[] = [
     {
         title: "Main",
         items: [
-            { label: "Dashboard", href: "/", icon: LayoutDashboard },
+            { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
             { label: "Bookings", href: "/bookings", icon: CalendarCheck, badge: 12 },
             { label: "Mechanics", href: "/mechanics", icon: Wrench },
             { label: "Workshops", href: "/workshops", icon: Building2 },
@@ -69,7 +69,7 @@ export function Sidebar({
     const router = useRouter();
 
     const isActive = (href: string) => {
-        if (href === "/") return router.pathname === "/";
+        if (href === "/dashboard") return router.pathname === "/dashboard";
         return router.pathname.startsWith(href);
     };
 
