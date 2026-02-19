@@ -3,16 +3,35 @@ import Head from "next/head";
 import Link from "next/link";
 import { Mail, Lock, Eye, EyeOff, Chrome, Apple, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const LoginPage = () => {
+    const { login, isAuthenticated } = useAuth();
+    const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    useEffect(() => {
+        if (isAuthenticated) {
+            router.push("/");
+        }
+    }, [isAuthenticated, router]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
-        // Simulate login
-        setTimeout(() => setIsLoading(false), 2000);
+        try {
+            await login(email);
+            router.push("/");
+        } catch (error) {
+            console.error("Login failed", error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -47,6 +66,8 @@ const LoginPage = () => {
                                 <input
                                     type="email"
                                     required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     placeholder="name@company.com"
                                     className="w-full pl-11 pr-4 py-3 bg-slate-900/50 border border-slate-700/50 rounded-xl text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all duration-200"
                                 />
@@ -67,6 +88,8 @@ const LoginPage = () => {
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
                                     className="w-full pl-11 pr-12 py-3 bg-slate-900/50 border border-slate-700/50 rounded-xl text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all duration-200"
                                 />

@@ -113,6 +113,14 @@ export interface User {
   city: string;
 }
 
+export interface Admin {
+  id: string;
+  name: string;
+  email: string;
+  avatar?: string;
+  role: "super_admin" | "admin" | "operator";
+}
+
 // ===== TRANSACTION =====
 export type TransactionType =
   | "booking_payment"

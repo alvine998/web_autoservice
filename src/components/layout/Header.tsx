@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { LivePulse } from "@/components/shared/StatusBadge";
 import { NotificationDropdown } from "@/components/layout/NotificationDropdown";
+import { useAuth } from "@/hooks/useAuth";
 
 interface HeaderProps {
     onMenuClick: () => void;
@@ -18,6 +19,7 @@ interface HeaderProps {
 
 export function Header({ onMenuClick, collapsed }: HeaderProps) {
     const { theme, toggleTheme } = useTheme();
+    const { user, logout } = useAuth();
 
     return (
         <header
@@ -59,16 +61,20 @@ export function Header({ onMenuClick, collapsed }: HeaderProps) {
                 <NotificationDropdown />
 
                 {/* User avatar */}
-                <div className="flex items-center gap-2 ml-1 px-2 py-1 rounded-lg hover:bg-[var(--hover-bg)] cursor-pointer transition-colors">
+                <div
+                    onClick={logout}
+                    className="flex items-center gap-2 ml-1 px-2 py-1 rounded-lg hover:bg-danger-50 dark:hover:bg-danger-900/10 cursor-pointer transition-colors group"
+                    title="Click to Logout"
+                >
                     <div className="w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-lg flex items-center justify-center text-white text-xs font-bold">
-                        AD
+                        {user?.name.charAt(0) || "AD"}
                     </div>
-                    <div className="hidden md:block">
+                    <div className="hidden md:block text-left">
                         <p className="text-xs font-semibold text-[var(--text-primary)]">
-                            Admin
+                            {user?.name || "Admin"}
                         </p>
-                        <p className="text-[10px] text-[var(--text-tertiary)]">
-                            Super Admin
+                        <p className="text-[10px] text-[var(--text-tertiary)] group-hover:text-danger-500 transition-colors">
+                            {user?.role === "super_admin" ? "Super Admin" : user?.role || "Admin"} (Logout)
                         </p>
                     </div>
                     <ChevronDown

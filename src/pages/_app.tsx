@@ -5,6 +5,7 @@ import { queryClient } from "@/lib/queryClient";
 import { ThemeProvider } from "@/hooks/useTheme";
 import { ToastProvider } from "@/components/ui/Toast";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
+import { AuthProvider } from "@/hooks/useAuth";
 import { NextPage } from "next";
 import { ReactElement, ReactNode } from "react";
 
@@ -24,9 +25,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <ToastProvider>
-          {getLayout(<Component {...pageProps} />)}
-        </ToastProvider>
+        <AuthProvider>
+          <ToastProvider>
+            {getLayout(<Component {...pageProps} />)}
+          </ToastProvider>
+        </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
