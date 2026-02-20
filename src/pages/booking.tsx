@@ -13,6 +13,9 @@ const BookingPage = () => {
         vehicleModel: "",
         serviceType: "maintenance",
         date: "",
+        serviceLocation: "workshop",
+        address: "",
+        selectedWorkshop: "",
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -22,6 +25,11 @@ const BookingPage = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if (step < 4) {
+            handleNext();
+            return;
+        }
+
         setIsSubmitting(true);
         // Mock API call
         setTimeout(() => {
@@ -71,7 +79,7 @@ const BookingPage = () => {
                         <div className="flex h-2 bg-slate-100">
                             <div
                                 className="bg-primary-600 transition-all duration-500 ease-out"
-                                style={{ width: `${(step / 3) * 100}%` }}
+                                style={{ width: `${(step / 4) * 100}%` }}
                             />
                         </div>
 
@@ -219,13 +227,94 @@ const BookingPage = () => {
                                         </div>
                                     </div>
 
+                                    <div className="flex gap-4">
+                                        <button type="button" onClick={handleBack} className="flex-1 py-4 font-bold text-slate-500 hover:text-slate-700">Back</button>
+                                        <button
+                                            type="button"
+                                            onClick={handleNext}
+                                            disabled={!formData.date}
+                                            className="flex-[2] py-4 bg-slate-900 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-slate-800 transition-all disabled:opacity-50"
+                                        >
+                                            Continue <ArrowRight className="w-5 h-5" />
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {step === 4 && (
+                                <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                                            <ShieldCheck className="w-5 h-5" />
+                                        </div>
+                                        <h2 className="text-xl font-bold text-slate-900">Service Location</h2>
+                                    </div>
+
+                                    <div className="flex gap-4 p-1.5 bg-slate-100 rounded-2xl">
+                                        <button
+                                            type="button"
+                                            onClick={() => setFormData({ ...formData, serviceLocation: "workshop" })}
+                                            className={cn(
+                                                "flex-1 py-3 px-4 rounded-xl font-bold text-sm transition-all",
+                                                formData.serviceLocation === "workshop"
+                                                    ? "bg-white text-slate-900 shadow-sm"
+                                                    : "text-slate-500 hover:text-slate-700"
+                                            )}
+                                        >
+                                            Come to Workshop
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setFormData({ ...formData, serviceLocation: "home" })}
+                                            className={cn(
+                                                "flex-1 py-3 px-4 rounded-xl font-bold text-sm transition-all",
+                                                formData.serviceLocation === "home"
+                                                    ? "bg-white text-slate-900 shadow-sm"
+                                                    : "text-slate-500 hover:text-slate-700"
+                                            )}
+                                        >
+                                            Home Service
+                                        </button>
+                                    </div>
+
+                                    {formData.serviceLocation === "workshop" ? (
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-bold text-slate-700 ml-1">Select Workshop</label>
+                                            <select
+                                                required
+                                                value={formData.selectedWorkshop}
+                                                onChange={(e) => setFormData({ ...formData, selectedWorkshop: e.target.value })}
+                                                className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary-500/20 outline-none"
+                                            >
+                                                <option value="">Select a location</option>
+                                                <option value="jakarta-south">AutoService South Jakarta (Radio Dalam)</option>
+                                                <option value="jakarta-west">AutoService West Jakarta (Puri Indah)</option>
+                                                <option value="tangerang">AutoService Tangerang (BSD City)</option>
+                                                <option value="bekasi">AutoService Bekasi (Summarecon)</option>
+                                            </select>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-bold text-slate-700 ml-1">Service Address</label>
+                                            <textarea
+                                                required
+                                                value={formData.address}
+                                                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                                                className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary-500/20 outline-none min-h-[120px]"
+                                                placeholder="Enter your full address for home service..."
+                                            />
+                                        </div>
+                                    )}
+
                                     <div className="p-6 bg-slate-900 rounded-[2rem] text-white">
                                         <div className="flex items-center gap-3 mb-4 opacity-70">
                                             <ShieldCheck className="w-4 h-4" />
                                             <span className="text-xs font-bold uppercase tracking-wider">Service Guarantee</span>
                                         </div>
                                         <p className="text-sm text-slate-300 leading-relaxed font-medium">
-                                            By booking, you receive priority queuing and a 12-month warranty on any original parts installed.
+                                            {formData.serviceLocation === "workshop"
+                                                ? "By booking, you receive priority queuing and a 12-month warranty on any original parts installed."
+                                                : "Home service includes a professional mechanic visit with basic diagnostic tools. Service fee may apply."}
                                         </p>
                                     </div>
 
@@ -233,7 +322,7 @@ const BookingPage = () => {
                                         <button type="button" onClick={handleBack} className="flex-1 py-4 font-bold text-slate-500 hover:text-slate-700">Back</button>
                                         <button
                                             type="submit"
-                                            disabled={isSubmitting || !formData.date}
+                                            disabled={isSubmitting || (formData.serviceLocation === "workshop" ? !formData.selectedWorkshop : !formData.address)}
                                             className="flex-[2] py-4 bg-gradient-to-r from-primary-600 to-indigo-600 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:shadow-xl hover:shadow-primary-600/20 active:scale-[0.98] transition-all disabled:opacity-50"
                                         >
                                             {isSubmitting ? "Processing..." : "Confirm Booking"}
