@@ -8,6 +8,7 @@ import {
   Clock,
   ArrowRight,
   Car,
+  Bike,
   CheckCircle2,
   Users,
   MapPin,
@@ -20,6 +21,7 @@ import {
   Play,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import LandingLayout from "@/components/layout/LandingLayout";
 
 /* ─── Animated counter hook ─── */
 function useCounter(end: number, duration = 2000) {
@@ -81,28 +83,28 @@ const services = [
   {
     icon: Settings,
     title: "Full Maintenance",
-    desc: "Oil changes, filters, and complete scheduled service intervals.",
+    desc: "Oil changes, filters, chain adjustments, and scheduled service intervals for cars & bikes.",
     color: "from-indigo-500 to-primary-600",
     bgLight: "bg-indigo-50",
   },
   {
     icon: Wrench,
     title: "Engine Repair",
-    desc: "Expert diagnostics with cutting-edge tools for complex repairs.",
+    desc: "Expert diagnostics for car and motorcycle engines using cutting-edge tools.",
     color: "from-emerald-500 to-teal-600",
     bgLight: "bg-emerald-50",
   },
   {
     icon: ShieldCheck,
     title: "Safety Inspection",
-    desc: "Comprehensive brakes, suspension, and electrical health checks.",
+    desc: "Comprehensive brakes, suspension, tyre, and electrical health checks.",
     color: "from-amber-500 to-orange-600",
     bgLight: "bg-amber-50",
   },
   {
     icon: Zap,
     title: "Performance Tuning",
-    desc: "ECU remapping, exhaust upgrades, and dyno-tested power gains.",
+    desc: "ECU remapping, exhaust upgrades, and dyno-tested power gains for cars & motorcycles.",
     color: "from-rose-500 to-pink-600",
     bgLight: "bg-rose-50",
   },
@@ -116,9 +118,9 @@ const testimonials = [
     rating: 5,
   },
   {
-    name: "Sarah Wijaya",
-    role: "Mercedes C-Class Owner",
-    quote: "Transparent pricing and genuinely skilled technicians. I won't go anywhere else.",
+    name: "Rizky Fadillah",
+    role: "Kawasaki Ninja ZX-25R Owner",
+    quote: "Finally found a shop that truly understands sportbikes. My Ninja runs smoother than ever!",
     rating: 5,
   },
   {
@@ -146,44 +148,14 @@ const LandingPage = () => {
   }, [aboutReveal.visible]);
 
   return (
-    <div className="min-h-screen bg-white font-sans text-slate-900 overflow-x-hidden">
+    <>
       <Head>
-        <title>AutoService — Premium Auto Care in Jakarta</title>
+        <title>AutoService — Premium Car & Motorcycle Care in Jakarta</title>
         <meta
           name="description"
-          content="Expert automotive repair and maintenance with certified technicians and genuine parts. Trusted by 500+ vehicle owners."
+          content="Expert car and motorcycle repair & maintenance with certified technicians and genuine parts. Trusted by 500+ vehicle owners in Jakarta."
         />
       </Head>
-
-      {/* ────────────── NAVIGATION ────────────── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3">
-        <div className="max-w-6xl mx-auto bg-white/70 backdrop-blur-xl rounded-2xl px-5 py-3 flex items-center justify-between shadow-lg shadow-black/[0.03] border border-slate-200/60">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-indigo-700 rounded-xl flex items-center justify-center text-white font-extrabold text-sm shadow-lg shadow-primary-600/25 group-hover:shadow-primary-600/40 transition-shadow">
-              AS
-            </div>
-            <span className="font-extrabold text-xl tracking-tight text-slate-900 hidden sm:block">
-              Auto<span className="text-primary-600">Service</span>
-            </span>
-          </Link>
-
-          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-500">
-            <Link href="#services" className="hover:text-primary-600 transition-colors">Services</Link>
-            <Link href="#about" className="hover:text-primary-600 transition-colors">About</Link>
-            <Link href="#testimonials" className="hover:text-primary-600 transition-colors">Reviews</Link>
-            <Link href="#contact" className="hover:text-primary-600 transition-colors">Contact</Link>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Link
-              href="/login"
-              className="px-5 py-2.5 bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-500 hover:to-indigo-500 text-white rounded-xl text-sm font-bold shadow-md shadow-primary-600/20 hover:shadow-lg hover:shadow-primary-600/30 active:scale-[0.97] transition-all"
-            >
-              Admin Login
-            </Link>
-          </div>
-        </div>
-      </nav>
 
       {/* ────────────── HERO ────────────── */}
       <section className="relative pt-28 sm:pt-36 pb-20 sm:pb-28 px-6 overflow-hidden">
@@ -200,7 +172,7 @@ const LandingPage = () => {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-600" />
                 </span>
-                #1 Rated Auto Care in Jakarta
+                #1 Rated Car & Motorcycle Care in Jakarta
               </div>
             </Reveal>
 
@@ -211,7 +183,7 @@ const LandingPage = () => {
                 your{" "}
                 <span className="relative inline-block">
                   <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-600">
-                    prized ride.
+                    car & bike.
                   </span>
                   <span className="absolute bottom-1 left-0 w-full h-3 bg-primary-200/50 rounded -z-0" />
                 </span>
@@ -221,14 +193,14 @@ const LandingPage = () => {
             <Reveal delay={200}>
               <p className="text-lg text-slate-500 mb-9 leading-relaxed max-w-lg">
                 We combine state-of-the-art diagnostic equipment with master-certified
-                technicians to keep your vehicle performing at its absolute best.
+                technicians to keep your car or motorcycle performing at its absolute best.
               </p>
             </Reveal>
 
             <Reveal delay={300}>
               <div className="flex flex-wrap items-center gap-4">
                 <Link
-                  href="/login"
+                  href="/booking"
                   className="group flex items-center gap-2.5 px-8 py-4 bg-slate-900 text-white rounded-2xl text-base font-bold shadow-xl shadow-slate-900/10 hover:bg-slate-800 hover:shadow-2xl hover:shadow-slate-900/15 active:scale-[0.97] transition-all"
                 >
                   Book Appointment
@@ -254,8 +226,8 @@ const LandingPage = () => {
                 </div>
                 <div className="w-px h-10 bg-slate-200" />
                 <div className="text-center">
-                  <div className="text-2xl font-black text-slate-900">15+</div>
-                  <div className="text-xs text-slate-400 font-semibold">Years Exp.</div>
+                  <div className="text-2xl font-black text-slate-900">2026</div>
+                  <div className="text-xs text-slate-400 font-semibold">Est. Year</div>
                 </div>
                 <div className="w-px h-10 bg-slate-200" />
                 <div className="text-center">
@@ -274,7 +246,7 @@ const LandingPage = () => {
               <div className="relative z-10 rounded-[2rem] overflow-hidden shadow-2xl shadow-slate-900/10 border-[6px] border-white ring-1 ring-slate-200/50">
                 <img
                   src="https://images.unsplash.com/photo-1625047509248-ec889cbff17f?auto=format&fit=crop&q=80&w=1600"
-                  alt="Professional mechanic servicing a car engine"
+                  alt="Professional mechanic servicing a car and motorcycle"
                   className="w-full aspect-[4/3] object-cover"
                 />
                 {/* Gradient overlay at bottom */}
@@ -282,7 +254,7 @@ const LandingPage = () => {
                 <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between">
                   <div className="text-white">
                     <div className="text-sm font-bold">Expert Diagnostics</div>
-                    <div className="text-xs text-white/70">Using latest OBD-II scanners</div>
+                    <div className="text-xs text-white/70">Cars & Motorcycles</div>
                   </div>
                   <div className="bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-full text-white text-xs font-bold border border-white/20">
                     ✓ Certified
@@ -325,7 +297,7 @@ const LandingPage = () => {
         <div className="max-w-5xl mx-auto">
           <p className="text-center text-xs font-bold tracking-widest text-slate-400 uppercase mb-8">Trusted by owners of</p>
           <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-slate-300">
-            {["BMW", "Mercedes-Benz", "Audi", "Toyota", "Honda", "Porsche"].map((brand) => (
+            {["BMW", "Mercedes-Benz", "Toyota", "Honda", "Kawasaki", "Yamaha"].map((brand) => (
               <span key={brand} className="text-lg sm:text-xl font-black tracking-tight text-slate-300 hover:text-slate-500 transition-colors cursor-default">
                 {brand}
               </span>
@@ -345,7 +317,7 @@ const LandingPage = () => {
               </div>
               <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">Premium Services</h2>
               <p className="text-slate-500 max-w-lg mx-auto text-base">
-                From routine oil changes to full engine rebuilds, we deliver precision and care at every level.
+                From routine oil changes to full engine rebuilds — for both cars and motorcycles — we deliver precision and care.
               </p>
             </div>
           </Reveal>
@@ -389,7 +361,7 @@ const LandingPage = () => {
               <h2 className="text-4xl lg:text-5xl font-black mb-10 leading-[1.1] tracking-tight">
                 The trusted choice for{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-indigo-400">
-                  premium vehicles.
+                  cars & motorcycles.
                 </span>
               </h2>
             </Reveal>
@@ -398,14 +370,14 @@ const LandingPage = () => {
               {[
                 {
                   icon: CheckCircle2,
-                  title: "15+ Years of Excellence",
-                  desc: "Founded in 2008, we've served thousands of premium vehicle owners across Greater Jakarta.",
+                  title: "Founded in 2026",
+                  desc: "We started with a vision to revolutionize auto care in Jakarta with modern precision and tech.",
                   gradient: "from-emerald-400 to-teal-500",
                 },
                 {
                   icon: Users,
                   title: "Certified Master Technicians",
-                  desc: "Our team holds certifications from BMW, Mercedes-Benz, and Toyota master programs.",
+                  desc: "Our team is certified by top car and motorcycle manufacturers including BMW, Toyota, and Kawasaki.",
                   gradient: "from-blue-400 to-indigo-500",
                 },
                 {
@@ -472,7 +444,7 @@ const LandingPage = () => {
               </div>
               <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">What Our Clients Say</h2>
               <p className="text-slate-500 max-w-lg mx-auto">
-                Real feedback from real vehicle owners who trust us with their cars.
+                Real feedback from car and motorcycle owners who trust us with their rides.
               </p>
             </div>
           </Reveal>
@@ -526,7 +498,7 @@ const LandingPage = () => {
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <Link
-                    href="/login"
+                    href="/booking"
                     className="group flex items-center gap-2.5 px-8 py-4 bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-500 hover:to-indigo-500 text-white rounded-2xl text-base font-bold shadow-xl shadow-primary-600/20 hover:shadow-2xl active:scale-[0.97] transition-all"
                   >
                     Get Started
@@ -545,84 +517,12 @@ const LandingPage = () => {
           </Reveal>
         </div>
       </section>
-
-      {/* ────────────── FOOTER ────────────── */}
-      <footer id="contact" className="py-16 px-6 bg-slate-950 text-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-12 mb-12">
-            {/* Brand column */}
-            <div className="md:col-span-2">
-              <div className="flex items-center gap-2.5 mb-5">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-extrabold text-sm">
-                  AS
-                </div>
-                <span className="font-extrabold text-xl text-white tracking-tight">
-                  Auto<span className="text-primary-400">Service</span>
-                </span>
-              </div>
-              <p className="text-slate-400 text-sm max-w-sm leading-relaxed mb-5">
-                Premium automotive care for enthusiasts and daily drivers alike.
-                Serving Jakarta &amp; Greater Jabodetabek since 2008.
-              </p>
-              <div className="flex gap-3">
-                {["Instagram", "Facebook", "WhatsApp"].map((social) => (
-                  <Link
-                    key={social}
-                    href="#"
-                    className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 text-xs font-bold transition-all"
-                  >
-                    {social[0]}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Quick links */}
-            <div>
-              <h4 className="text-sm font-bold text-white mb-4">Quick Links</h4>
-              <ul className="space-y-3 text-sm text-slate-400">
-                <li><Link href="#services" className="hover:text-white transition-colors">Services</Link></li>
-                <li><Link href="#about" className="hover:text-white transition-colors">About Us</Link></li>
-                <li><Link href="#testimonials" className="hover:text-white transition-colors">Reviews</Link></li>
-                <li><Link href="/login" className="hover:text-white transition-colors">Admin Login</Link></li>
-              </ul>
-            </div>
-
-            {/* Contact */}
-            <div>
-              <h4 className="text-sm font-bold text-white mb-4">Contact</h4>
-              <ul className="space-y-3 text-sm text-slate-400">
-                <li className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-primary-400 flex-shrink-0" />
-                  +62 21 555 0123
-                </li>
-                <li className="flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-primary-400 flex-shrink-0" />
-                  info@autoservice.id
-                </li>
-                <li className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 text-primary-400 flex-shrink-0 mt-0.5" />
-                  Jl. TB Simatupang No.40, Jakarta Selatan, 12430
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-slate-500">&copy; 2024 AutoService. All rights reserved.</p>
-            <div className="flex gap-6 text-xs text-slate-500">
-              <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </>
   );
 };
 
 LandingPage.getLayout = (page: ReactElement) => {
-  return <>{page}</>;
+  return <LandingLayout>{page}</LandingLayout>;
 };
 
 export default LandingPage;
